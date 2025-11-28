@@ -16,6 +16,17 @@ export const SOCIAL_LINKS: SocialLink[] = [
   { platform: "Email", url: `mailto:${PERSONAL_INFO.email}`, icon: "Mail" }
 ];
 
+export const DRAGON_LORE = {
+  title: "The Twin Terrors",
+  subtitle: "Guardians of the Glitch",
+  description: [
+    "Born from the corrupted sectors of a forgotten mainframe, Vex and Null were not programmed—they evolved.",
+    "Vex (The Crimson Hunter) feeds on runtime errors and aggressive user interactions. Its scales burn with the heat of overclocked GPUs.",
+    "Null (The Void Walker) thrives in the silence of memory leaks, trailing shadows of deleted data."
+  ],
+  warning: "// DO NOT STOP MOVING //"
+};
+
 export const EXPERIENCE: ExperienceItem[] = [
   {
     id: 1,

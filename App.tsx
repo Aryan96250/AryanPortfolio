@@ -8,6 +8,7 @@ import Skills from './components/Skills';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import BackgroundCanvas from './components/BackgroundCanvas';
+import Lore from './components/Lore';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
       <Navbar />
       <main className="relative z-10">
         <Hero />
+        <Lore />
         <Services />
         <Experience />
         <Projects />

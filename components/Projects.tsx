@@ -4,21 +4,16 @@ import { PROJECTS } from '../constants';
 
 const Projects: React.FC = () => {
   return (
-    <section id="projects" className="py-24 relative">
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">
-              Featured <span className="text-gradient">Projects</span>
-            </h2>
-            <p className="text-slate-400 text-lg max-w-xl">
-              A showcase of my recent work in AI, Blockchain, and Full-stack development.
-            </p>
-          </div>
-          <div className="hidden md:block w-32 h-1 bg-gradient-to-r from-primary to-transparent rounded-full mb-4"></div>
+    <section id="projects" className="py-24 relative z-10">
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-horror text-white mb-4">
+             Mission <span className="text-blood">Reports</span>
+          </h2>
+          <p className="text-slate-400">Deployed Applications & Systems</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {PROJECTS.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
@@ -30,13 +25,11 @@ const Projects: React.FC = () => {
 
 const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const slideInterval = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const mediaCount = project.media.length;
 
-  // Auto-slide logic
   useEffect(() => {
     startSlideTimer();
     return () => stopSlideTimer();
@@ -46,7 +39,7 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
     stopSlideTimer();
     slideInterval.current = setTimeout(() => {
       nextSlide();
-    }, 4000); 
+    }, 5000); 
   };
 
   const stopSlideTimer = () => {
@@ -63,34 +56,25 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
     setCurrentSlide((prev) => (prev - 1 + mediaCount) % mediaCount);
   };
 
-  // Play video when slide changes or card is active
   useEffect(() => {
     const currentMedia = project.media[currentSlide];
     if (currentMedia.type === 'video' && videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(e => console.log("Auto-play prevented", e));
+      videoRef.current.play().catch(e => console.log("Auto-play prevented"));
     }
   }, [currentSlide]);
 
   return (
     <div 
-      className="group relative rounded-3xl overflow-hidden glass-card hover:border-primary/50 transition-all duration-500 h-full flex flex-col shadow-2xl hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] bg-black/40"
-      onMouseEnter={() => {
-        setIsHovered(true);
-        stopSlideTimer();
-      }}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        startSlideTimer();
-      }}
+      className="group rounded-3xl overflow-hidden glass-jungle flex flex-col hover:border-red-600 transition-colors"
+      onMouseEnter={stopSlideTimer}
+      onMouseLeave={startSlideTimer}
     >
-      {/* Media Carousel Container */}
-      <div className="relative h-64 md:h-72 w-full overflow-hidden bg-black">
-        
+      <div className="relative h-64 bg-black overflow-hidden border-b border-green-900/50">
         {project.media.map((item, index) => (
            <div 
              key={index}
-             className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+             className={`absolute inset-0 w-full h-full transition-opacity duration-700 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
            >
              {item.type === 'video' ? (
                 <video
@@ -99,65 +83,43 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover opacity-90"
+                  className="w-full h-full object-cover opacity-80"
                 />
              ) : (
                 <img 
                   src={item.url} 
                   alt={project.title} 
-                  className="w-full h-full object-cover opacity-90"
+                  className="w-full h-full object-cover opacity-80"
                 />
              )}
-             
-             {/* Gradient Overlay */}
              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
            </div>
         ))}
 
-        {/* Navigation Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-          {project.media.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={(e) => {
-                e.preventDefault(); 
-                setCurrentSlide(idx);
-              }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentSlide ? 'bg-primary w-6 shadow-[0_0_10px_rgba(99,102,241,0.8)]' : 'bg-white/30 hover:bg-white'}`}
-            />
-          ))}
-        </div>
-        
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4 z-20">
-           <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-lg">
-             {project.category}
-           </span>
-        </div>
-
-        {/* Slide Controls (Visible on Hover) */}
-        <div className={`absolute inset-0 flex items-center justify-between px-4 z-20 pointer-events-none ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-           <button onClick={(e) => { e.preventDefault(); prevSlide(); }} className="p-2 rounded-full bg-black/60 hover:bg-primary/80 text-white backdrop-blur-sm pointer-events-auto transition-colors border border-white/10">
-             <ChevronLeft size={20} />
+        <div className="absolute bottom-4 right-4 flex gap-2 z-20">
+           <button onClick={(e) => { e.preventDefault(); prevSlide(); }} className="p-1 rounded-full bg-black/50 hover:bg-red-600 text-white transition-colors">
+             <ChevronLeft size={16} />
            </button>
-           <button onClick={(e) => { e.preventDefault(); nextSlide(); }} className="p-2 rounded-full bg-black/60 hover:bg-primary/80 text-white backdrop-blur-sm pointer-events-auto transition-colors border border-white/10">
-             <ChevronRight size={20} />
+           <button onClick={(e) => { e.preventDefault(); nextSlide(); }} className="p-1 rounded-full bg-black/50 hover:bg-red-600 text-white transition-colors">
+             <ChevronRight size={16} />
            </button>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-8 flex-1 flex flex-col relative z-10 bg-transparent">
+      <div className="p-8 flex-1 flex flex-col">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors font-display">
-            {project.title}
-          </h3>
+          <div>
+              <span className="text-xs font-bold text-red-500 uppercase tracking-widest">{project.category}</span>
+              <h3 className="text-2xl font-bold text-white group-hover:text-red-500 transition-colors font-display mt-1">
+                {project.title}
+              </h3>
+          </div>
           {project.link && (
             <a 
               href={project.link} 
               target="_blank" 
               rel="noreferrer" 
-              className="text-slate-500 hover:text-white transition-colors p-2 bg-white/5 rounded-full hover:bg-primary hover:shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+              className="text-slate-500 hover:text-white bg-white/5 p-2 rounded-full hover:bg-red-600 transition-all"
             >
               <ExternalLink size={20} />
             </a>
@@ -166,15 +128,15 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
 
         <div className="space-y-2 mb-6 flex-1">
           {project.description.map((desc, i) => (
-            <p key={i} className="text-slate-400 text-sm leading-relaxed border-l-2 border-white/10 pl-3 hover:border-primary transition-colors">
+            <p key={i} className="text-slate-400 text-sm pl-3 border-l-2 border-green-900 group-hover:border-red-600 transition-colors">
               {desc}
             </p>
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+        <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
-            <span key={t} className="text-xs font-medium text-secondary bg-secondary/5 px-3 py-1 rounded-full border border-secondary/20 hover:bg-secondary/20 transition-colors">
+            <span key={t} className="text-xs font-mono text-green-400 bg-green-900/20 px-3 py-1 rounded border border-green-900/30">
               {t}
             </span>
           ))}

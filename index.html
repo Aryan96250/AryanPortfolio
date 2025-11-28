@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aryan Chauhan | Software Developer</title>
+    <title>Aryan Chauhan | Horror Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Creepster&family=Nosifer&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -16,29 +16,33 @@
               sans: ['Inter', 'sans-serif'],
               display: ['Space Grotesk', 'sans-serif'],
               horror: ['Creepster', 'cursive'],
+              dripping: ['Nosifer', 'cursive'],
             },
             colors: {
-              primary: '#ef4444', // Red 500
-              secondary: '#f97316', // Orange 500
-              accent: '#eab308', // Yellow 500
-              dark: '#000000', // Pitch Black
-              card: '#0a0a0a', // Very dark gray
-              blood: '#880808',
+              blood: '#8a0303',
+              swamp: '#0d1f12', 
+              rot: '#4a5d23',
+              dark: '#010502',
             },
             animation: {
-              'float': 'float 6s ease-in-out infinite',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'flicker': 'flicker 0.15s infinite',
+              'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'flicker': 'flicker 0.3s infinite alternate',
+              'glitch': 'glitch 1s linear infinite',
+              'float-slow': 'float 8s ease-in-out infinite',
             },
             keyframes: {
+              flicker: {
+                '0%': { opacity: 1, textShadow: '0 0 10px #8a0303' },
+                '100%': { opacity: 0.6, textShadow: '0 0 2px #8a0303' },
+              },
+              glitch: {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' },
+              },
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-20px)' },
-              },
-              flicker: {
-                '0%, 100%': { opacity: 1 },
-                '50%': { opacity: 0.7 },
-                '25%, 75%': { opacity: 0.9 },
+                '50%': { transform: 'translateY(-15px)' },
               }
             }
           }
@@ -47,72 +51,53 @@
     </script>
     <style>
       html {
-        scroll-padding-top: 80px; /* Offset for sticky header */
+        scroll-padding-top: 100px; /* Offset for fixed navbar */
         background-color: #000000;
-        cursor: crosshair; /* Horror cursor */
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%238a0303" stroke="%23ffffff" stroke-width="1"><path d="M12 2L2 22h20L12 2z"/></svg>') 16 16, auto;
       }
       
       body {
         background-color: #000000;
-        color: #e2e8f0;
+        color: #d4d4d4;
         overflow-x: hidden;
       }
 
-      /* Custom Scrollbar */
+      /* Scrollbar */
       ::-webkit-scrollbar {
-        width: 6px;
+        width: 10px;
       }
       ::-webkit-scrollbar-track {
-        background: #000000; 
+        background: #0a0a0a; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #333; 
-        border-radius: 4px;
-        border: 1px solid #555;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #ef4444; 
+        background: linear-gradient(180deg, #1a2e05, #8a0303); 
+        border-radius: 5px;
+        border: 1px solid #000;
       }
 
-      /* Enhanced Glassmorphism for Black Background */
-      .glass {
-        background: rgba(5, 5, 5, 0.7);
+      /* Jungle Horror Glass */
+      .glass-jungle {
+        background: rgba(5, 20, 10, 0.7);
         backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(74, 93, 35, 0.3);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
       }
       
-      .glass-card {
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(100, 100, 100, 0.1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-      }
-      
-      .glass-card:hover {
-        border-color: rgba(239, 68, 68, 0.6);
-        background: rgba(20, 5, 5, 0.9);
-        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+      .glass-jungle:hover {
+        background: rgba(10, 25, 10, 0.85);
+        border-color: rgba(138, 3, 3, 0.6);
+        box-shadow: 0 0 20px rgba(138, 3, 3, 0.3);
       }
 
-      /* Text Glow */
-      .text-glow {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      /* Text Effects */
+      .text-blood-glow {
+        text-shadow: 0 0 15px rgba(138, 3, 3, 0.8), 2px 2px 0px rgba(0,0,0,1);
       }
 
-      /* Gradient Text */
-      .text-gradient {
-        background: linear-gradient(to right, #ef4444, #f97316, #b91c1c);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        filter: drop-shadow(0 0 5px rgba(239,68,68,0.5));
-      }
-
-      .hover-flicker:hover {
-        animation: flicker 0.2s infinite;
-        text-shadow: 0 0 8px #ef4444;
+      .hover-horror:hover {
+        color: #ef4444;
+        text-shadow: 2px 2px 0px #000, -1px -1px 0 #8a0303;
+        transform: scale(1.05);
       }
     </style>
   <script type="importmap">
@@ -126,7 +111,7 @@
 }
 </script>
 </head>
-  <body class="bg-black text-slate-300 font-sans antialiased selection:bg-red-900 selection:text-white overflow-x-hidden">
+  <body class="bg-black text-slate-300 font-sans antialiased selection:bg-blood selection:text-white">
     <div id="root"></div>
   </body>
 </html>
