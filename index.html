@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aryan Chauhan | Horror Portfolio</title>
+    <title>Aryan Chauhan | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Creepster&family=Nosifer&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -15,35 +15,27 @@
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
               display: ['Space Grotesk', 'sans-serif'],
-              horror: ['Creepster', 'cursive'],
-              dripping: ['Nosifer', 'cursive'],
+              serif: ['Playfair Display', 'serif'],
             },
             colors: {
-              blood: '#ff0000',
-              swamp: '#1a2e05', 
-              rot: '#4a5d23',
-              dark: '#050a05',
+              nature: '#2d6a4f',
+              sky: '#40916c', 
+              earth: '#d8f3dc',
+              dark: '#081c15',
             },
             animation: {
-              'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'flicker': 'flicker 0.3s infinite alternate',
-              'glitch': 'glitch 1s linear infinite',
+              'pulse-fast': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'float-slow': 'float 8s ease-in-out infinite',
-              'flash': 'flash 5s infinite random',
+              'fade-in': 'fadeIn 1s ease-out',
             },
             keyframes: {
-              flicker: {
-                '0%': { opacity: 1, textShadow: '0 0 10px #ff0000' },
-                '100%': { opacity: 0.6, textShadow: '0 0 2px #8a0303' },
-              },
-              glitch: {
-                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
-                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
-                '62%': { transform: 'translate(0,0) skew(5deg)' },
-              },
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-15px)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              fadeIn: {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
               }
             }
           }
@@ -52,64 +44,51 @@
     </script>
     <style>
       html {
-        scroll-padding-top: 100px; /* Offset for fixed navbar */
-        background-color: #020202;
-        cursor: crosshair;
+        scroll-padding-top: 100px;
+        background-color: #000;
       }
-      
       body {
-        background-color: #020202;
-        color: #e5e5e5;
+        background-color: #000;
         overflow-x: hidden;
       }
 
       /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 10px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #000; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #333, #8a0303); 
-        border-radius: 5px;
-        border: 1px solid #000;
-      }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); }
 
-      /* Jungle Horror Glass - Lightened for visibility */
-      .glass-jungle {
-        background: rgba(0, 0, 0, 0.25); /* Much more transparent */
-        backdrop-filter: blur(8px);
+      /* --- THEME SYSTEM --- */
+
+      /* Glass Morphism Base */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        transition: all 0.3s ease;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s ease;
       }
       
-      .glass-jungle:hover {
-        background: rgba(0, 0, 0, 0.4);
-        border-color: rgba(255, 50, 50, 0.4);
-        box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
-      }
-      
-      .glass-card {
-        background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
+      .glass-panel:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
       }
 
-      /* Text Effects */
-      .text-blood-glow {
-        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 2px 2px 0px rgba(0,0,0,1);
+      /* Weather Specific Overrides */
+      .theme-sunny .text-accent { color: #f59e0b; } /* Amber */
+      .theme-rain .text-accent { color: #38bdf8; } /* Sky Blue */
+      .theme-snow .text-accent { color: #a5f3fc; } /* Cyan */
+
+      .text-shadow {
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       }
       
-      .text-shadow-md {
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      .text-shadow-lg {
+        text-shadow: 0 4px 20px rgba(0,0,0,0.8);
       }
 
-      .hover-horror:hover {
-        color: #ef4444;
-        text-shadow: 0 0 8px #ff0000;
-        transform: scale(1.05);
-      }
     </style>
   <script type="importmap">
 {
@@ -122,7 +101,7 @@
 }
 </script>
 </head>
-  <body class="bg-black text-slate-200 font-sans antialiased selection:bg-blood selection:text-white">
+  <body class="bg-black font-sans text-white antialiased selection:bg-white/30 selection:text-white">
     <div id="root"></div>
   </body>
 </html>

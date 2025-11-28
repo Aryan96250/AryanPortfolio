@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Skull } from 'lucide-react';
+import { Menu, X, Mountain } from 'lucide-react';
+import { WeatherType } from './BackgroundCanvas';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  weather?: WeatherType;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ weather }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -15,7 +20,6 @@ const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', href: '#home' },
-    { name: 'Lore', href: '#lore' },
     { name: 'Services', href: '#services' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
@@ -33,13 +37,17 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const navClasses = scrolled 
+    ? 'bg-black/40 backdrop-blur-lg border-b border-white/10 shadow-lg py-4'
+    : 'bg-transparent py-6';
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 border-b border-blood shadow-[0_0_20px_rgba(138,3,3,0.3)] py-3' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${navClasses}`}>
       <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
         
         <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="flex items-center gap-2 group cursor-pointer">
-          <Skull className="text-red-700 group-hover:animate-pulse" size={28} />
-          <span className="text-2xl font-horror text-white tracking-widest group-hover:text-red-500 transition-colors">
+          <Mountain className="text-white group-hover:text-accent transition-colors" size={28} />
+          <span className="text-2xl font-display font-bold tracking-wider text-white">
             ARYAN
           </span>
         </a>
@@ -51,7 +59,7 @@ const Navbar: React.FC = () => {
               key={link.name} 
               href={link.href} 
               onClick={(e) => handleLinkClick(e, link.href)}
-              className="text-sm font-bold text-slate-400 hover:text-red-500 transition-all uppercase tracking-widest hover:scale-110 hover:shadow-[0_0_10px_#ff0000] relative"
+              className="text-sm font-medium uppercase tracking-widest hover:text-accent text-white/80 transition-all relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-accent after:bottom-[-4px] after:left-0 after:transition-all hover:after:w-full text-shadow-sm"
             >
               {link.name}
             </a>
@@ -60,7 +68,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu Toggle */}
         <button 
-          className="lg:hidden text-white hover:text-red-500 transition-colors"
+          className="lg:hidden text-white hover:text-accent transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={32} /> : <Menu size={32} />}
@@ -68,14 +76,14 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      <div className={`lg:hidden absolute top-full left-0 w-full bg-black/95 border-b border-blood backdrop-blur-xl transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-screen opacity-100 py-6' : 'max-h-0 opacity-0 py-0'}`}>
+      <div className={`lg:hidden absolute top-full left-0 w-full backdrop-blur-xl transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-screen opacity-100 py-6 border-b border-white/10' : 'max-h-0 opacity-0 py-0'} bg-black/80`}>
          <div className="flex flex-col items-center gap-6">
           {navLinks.map((link) => (
             <a 
               key={link.name} 
               href={link.href} 
               onClick={(e) => handleLinkClick(e, link.href)}
-              className="text-xl font-horror text-slate-300 hover:text-red-600 transition-colors"
+              className="text-xl font-display text-white hover:text-accent transition-colors"
             >
               {link.name}
             </a>

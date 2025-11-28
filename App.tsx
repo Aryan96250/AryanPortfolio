@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
@@ -7,23 +7,29 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Education from './components/Education';
 import Contact from './components/Contact';
-import BackgroundCanvas from './components/BackgroundCanvas';
-import Lore from './components/Lore';
+import BackgroundCanvas, { WeatherType } from './components/BackgroundCanvas';
 
 const App: React.FC = () => {
+  // Fixed state for consistent Mountain theme
+  const [weather] = useState<WeatherType>('SUNNY'); 
+
   return (
-    <div className="bg-black min-h-screen text-slate-300 font-sans selection:bg-red-900 selection:text-white relative overflow-hidden">
-      <BackgroundCanvas />
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <Lore />
+    <div className={`min-h-screen font-sans transition-colors duration-1000 relative overflow-hidden theme-sunny`}>
+      
+      {/* Background handles the video */}
+      <BackgroundCanvas weather={weather} />
+      
+      <Navbar weather={weather} />
+      
+      <main className="relative z-10 transition-colors duration-1000">
+        <Hero weather={weather} />
         <Services />
         <Experience />
         <Projects />
         <Skills />
         <Education />
       </main>
+      
       <div className="relative z-10">
         <Contact />
       </div>

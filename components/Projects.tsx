@@ -7,10 +7,10 @@ const Projects: React.FC = () => {
     <section id="projects" className="py-24 relative z-10">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-horror text-white mb-4">
-             Mission <span className="text-blood">Reports</span>
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-white text-shadow">
+             Selected <span className="text-accent italic font-serif">Works</span>
           </h2>
-          <p className="text-slate-400">Deployed Applications & Systems</p>
+          <p className="text-white/70 text-shadow-sm">A collection of deployed applications.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -66,11 +66,11 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
 
   return (
     <div 
-      className="group rounded-3xl overflow-hidden glass-jungle flex flex-col hover:border-red-600 transition-colors"
+      className="group rounded-3xl overflow-hidden glass-panel flex flex-col transition-colors"
       onMouseEnter={stopSlideTimer}
       onMouseLeave={startSlideTimer}
     >
-      <div className="relative h-64 bg-black overflow-hidden border-b border-green-900/50">
+      <div className="relative h-64 bg-black/50 overflow-hidden border-b border-white/10">
         {project.media.map((item, index) => (
            <div 
              key={index}
@@ -83,24 +83,23 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover opacity-80"
+                  className="w-full h-full object-cover"
                 />
              ) : (
                 <img 
                   src={item.url} 
                   alt={project.title} 
-                  className="w-full h-full object-cover opacity-80"
+                  className="w-full h-full object-cover"
                 />
              )}
-             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
            </div>
         ))}
 
         <div className="absolute bottom-4 right-4 flex gap-2 z-20">
-           <button onClick={(e) => { e.preventDefault(); prevSlide(); }} className="p-1 rounded-full bg-black/50 hover:bg-red-600 text-white transition-colors">
+           <button onClick={(e) => { e.preventDefault(); prevSlide(); }} className="p-1.5 rounded-full bg-black/40 hover:bg-white text-white hover:text-black transition-colors backdrop-blur-md">
              <ChevronLeft size={16} />
            </button>
-           <button onClick={(e) => { e.preventDefault(); nextSlide(); }} className="p-1 rounded-full bg-black/50 hover:bg-red-600 text-white transition-colors">
+           <button onClick={(e) => { e.preventDefault(); nextSlide(); }} className="p-1.5 rounded-full bg-black/40 hover:bg-white text-white hover:text-black transition-colors backdrop-blur-md">
              <ChevronRight size={16} />
            </button>
         </div>
@@ -109,8 +108,8 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
       <div className="p-8 flex-1 flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <div>
-              <span className="text-xs font-bold text-red-500 uppercase tracking-widest">{project.category}</span>
-              <h3 className="text-2xl font-bold text-white group-hover:text-red-500 transition-colors font-display mt-1">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest">{project.category}</span>
+              <h3 className="text-2xl font-bold text-white group-hover:text-accent transition-colors font-display mt-1">
                 {project.title}
               </h3>
           </div>
@@ -119,7 +118,7 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
               href={project.link} 
               target="_blank" 
               rel="noreferrer" 
-              className="text-slate-500 hover:text-white bg-white/5 p-2 rounded-full hover:bg-red-600 transition-all"
+              className="text-white/70 hover:text-white bg-white/10 p-2 rounded-full hover:bg-accent hover:text-black transition-all"
             >
               <ExternalLink size={20} />
             </a>
@@ -128,7 +127,7 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
 
         <div className="space-y-2 mb-6 flex-1">
           {project.description.map((desc, i) => (
-            <p key={i} className="text-slate-400 text-sm pl-3 border-l-2 border-green-900 group-hover:border-red-600 transition-colors">
+            <p key={i} className="text-white/70 text-sm pl-3 border-l-2 border-white/10 group-hover:border-accent transition-colors">
               {desc}
             </p>
           ))}
@@ -136,7 +135,7 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0] }> = ({ project }) => 
 
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
-            <span key={t} className="text-xs font-mono text-green-400 bg-green-900/20 px-3 py-1 rounded border border-green-900/30">
+            <span key={t} className="text-xs font-mono text-white/60 bg-white/5 px-3 py-1 rounded border border-white/10">
               {t}
             </span>
           ))}
