@@ -3,33 +3,44 @@ import { EDUCATION } from '../constants';
 import { GraduationCap, Award } from 'lucide-react';
 
 const Education: React.FC = () => {
+  // Since we only have one item now, let's make it a centered featured card
+  const edu = EDUCATION[0];
+
   return (
-    <section id="education" className="py-20">
+    <section id="education" className="py-24 bg-slate-900/30">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Education</h2>
-          <div className="w-20 h-1 bg-secondary mx-auto rounded-full"></div>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-display mb-4">Education</h2>
+          <p className="text-slate-400">Academic background and qualifications.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {EDUCATION.map((edu) => (
-            <div key={edu.id} className="bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
-               <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-secondary/10"></div>
-               
-               <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-secondary border border-slate-700">
-                  <GraduationCap size={24} />
-               </div>
+        <div className="max-w-3xl mx-auto">
+           <div className="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+              {/* Background gradient */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] -mr-16 -mt-16 group-hover:bg-secondary/20 transition-colors"></div>
+              
+              <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-8 relative z-10">
+                 <div className="w-20 h-20 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center text-secondary shadow-xl shrink-0">
+                    <GraduationCap size={40} />
+                 </div>
+                 
+                 <div className="flex-1">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{edu.degree}</h3>
+                    <p className="text-xl text-primary font-medium mb-1">{edu.institution}</p>
+                    <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-400 mt-4">
+                       <span>{edu.location}</span>
+                       <span>•</span>
+                       <span>{edu.period}</span>
+                    </div>
+                 </div>
 
-               <h3 className="text-lg font-bold text-white mb-2">{edu.degree}</h3>
-               <p className="text-slate-300 font-medium mb-1">{edu.institution}</p>
-               <p className="text-slate-500 text-sm mb-4">{edu.location} | {edu.period}</p>
-               
-               <div className="inline-flex items-center gap-2 bg-slate-900/50 px-3 py-1 rounded-full border border-slate-700 text-sm text-primary">
-                  <Award size={14} />
-                  <span>{edu.score}</span>
-               </div>
-            </div>
-          ))}
+                 <div className="bg-slate-950/50 backdrop-blur px-6 py-3 rounded-xl border border-white/5 text-center shrink-0">
+                    <Award size={24} className="text-yellow-400 mx-auto mb-1" />
+                    <p className="text-sm text-slate-400">CGPA</p>
+                    <p className="text-lg font-bold text-white">6.8/10</p>
+                 </div>
+              </div>
+           </div>
         </div>
       </div>
     </section>

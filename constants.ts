@@ -1,4 +1,4 @@
-import { ExperienceItem, ProjectItem, SkillCategory, EducationItem, SocialLink } from './types';
+import { ExperienceItem, ProjectItem, SkillCategory, EducationItem, SocialLink, ServiceItem } from './types';
 
 export const PERSONAL_INFO = {
   name: "Aryan Chauhan",
@@ -12,7 +12,7 @@ export const PERSONAL_INFO = {
 
 export const SOCIAL_LINKS: SocialLink[] = [
   { platform: "LinkedIn", url: "https://www.linkedin.com/in/chauhan-3a11b6286", icon: "Linkedin" },
-  { platform: "GitHub", url: "https://github.com", icon: "Github" }, // Placeholder as URL wasn't explicit in prompt, assuming user has one based on context
+  { platform: "GitHub", url: "https://github.com", icon: "Github" }, 
   { platform: "Email", url: `mailto:${PERSONAL_INFO.email}`, icon: "Mail" }
 ];
 
@@ -47,10 +47,25 @@ export const PROJECTS: ProjectItem[] = [
       "Integrated personalized AI-driven activities.",
       "Implemented content safety features and automation scripts using Cypress."
     ],
-    tech: ["Ionic", "Vue.js", "Cypress", "AI Integration"]
+    tech: ["Ionic", "Vue.js", "Cypress", "AI Integration"],
+    // Placeholder video. Replace with your actual project video URL.
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-little-girl-playing-with-a-tablet-4548-large.mp4" 
   },
   {
     id: 2,
+    title: "Invioned",
+    category: "Immersive Tech",
+    description: [
+      "A next-generation visualization tool for architectural designs.",
+      "Integrated real-time rendering and interactive 3D walkthroughs.",
+      "Optimized for high performance on web and mobile platforms."
+    ],
+    tech: ["React", "Three.js", "WebGL", "Tailwind"],
+    // Placeholder video. Replace with your actual project video URL.
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-4933-large.mp4"
+  },
+  {
+    id: 3,
     title: "SplitLevel",
     category: "Real Estate Platform",
     description: [
@@ -61,7 +76,7 @@ export const PROJECTS: ProjectItem[] = [
     tech: ["Blockchain", "MetaMask", "Stripe", "Smart Contracts"]
   },
   {
-    id: 3,
+    id: 4,
     title: "Bloomtrak",
     category: "Workforce Management",
     description: [
@@ -76,14 +91,14 @@ export const PROJECTS: ProjectItem[] = [
 export const SKILLS: SkillCategory[] = [
   {
     category: "Programming",
-    skills: ["JavaScript", "TypeScript", "HTML", "CSS"]
+    skills: ["JavaScript", "TypeScript", "HTML", "CSS", "Solidity"]
   },
   {
-    category: "Frameworks & Libs",
-    skills: ["Angular", "Vue.js", "Ionic", "React Native", "Angular Material", "Tailwind CSS", "Bootstrap"]
+    category: "Frameworks",
+    skills: ["Angular", "Vue.js", "Ionic", "React Native", "Tailwind CSS"]
   },
   {
-    category: "Tools & Platforms",
+    category: "Tools & Core",
     skills: ["Git", "JIRA", "Firebase", "Cypress", "MetaMask", "Stripe"]
   }
 ];
@@ -96,21 +111,32 @@ export const EDUCATION: EducationItem[] = [
     period: "2020 – 2023",
     location: "Hamirpur, India",
     score: "Cum. GPA: 6.8/10.0"
+  }
+];
+
+export const SERVICES: ServiceItem[] = [
+  {
+    id: 1,
+    title: "Web Development",
+    description: "Building responsive, high-performance websites using modern frameworks like Angular, React, and Vue.js.",
+    icon: "Layout"
   },
   {
     id: 2,
-    institution: "Govt Senior Secondary School",
-    degree: "Higher Secondary",
-    period: "2019 – 2020",
-    location: "Ladrour, India",
-    score: "Percentage: 69%"
+    title: "Mobile App Development",
+    description: "Creating seamless cross-platform mobile applications with Ionic and React Native for iOS and Android.",
+    icon: "Smartphone"
   },
   {
     id: 3,
-    institution: "Govt Senior Secondary School",
-    degree: "Matriculation",
-    period: "2017 – 2018",
-    location: "Ladrour, India",
-    score: "Percentage: 83.20%"
+    title: "Blockchain Integration",
+    description: "Integrating secure smart contracts, MetaMask wallets, and crypto payment gateways into applications.",
+    icon: "Link"
+  },
+  {
+    id: 4,
+    title: "UI/UX Implementation",
+    description: "Translating designs into pixel-perfect, interactive, and accessible user interfaces.",
+    icon: "Palette"
   }
 ];

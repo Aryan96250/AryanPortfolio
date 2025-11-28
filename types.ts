@@ -13,6 +13,8 @@ export interface ProjectItem {
   category: string;
   description: string[];
   tech: string[];
+  videoUrl?: string; // Optional URL for project video
+  link?: string;
 }
 
 export interface SkillCategory {
@@ -33,4 +35,11 @@ export interface SocialLink {
   platform: string;
   url: string;
   icon: string; // Icon name reference
+}
+
+export interface ServiceItem {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
 }
