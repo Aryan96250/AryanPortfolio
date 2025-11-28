@@ -42,38 +42,49 @@ export const PROJECTS: ProjectItem[] = [
     id: 1,
     title: "Curico",
     category: "AI Children’s App",
+    link: "https://play.curico.ai/",
     description: [
       "Built a secure Ionic + Vue.js app with a child-friendly UI.",
       "Integrated personalized AI-driven activities.",
       "Implemented content safety features and automation scripts using Cypress."
     ],
     tech: ["Ionic", "Vue.js", "Cypress", "AI Integration"],
-    // Placeholder video. Replace with your actual project video URL.
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-little-girl-playing-with-a-tablet-4548-large.mp4" 
+    media: [
+      { type: 'video', url: 'https://assets.mixkit.co/videos/preview/mixkit-little-girl-having-fun-with-a-tablet-4549-large.mp4' },
+      { type: 'image', url: 'https://images.unsplash.com/photo-1541560052-77ec1bbc09f7?auto=format&fit=crop&q=80&w=1000' }
+    ]
   },
   {
     id: 2,
     title: "Invioned",
     category: "Immersive Tech",
+    link: "https://invisioned.io/",
     description: [
       "A next-generation visualization tool for architectural designs.",
       "Integrated real-time rendering and interactive 3D walkthroughs.",
       "Optimized for high performance on web and mobile platforms."
     ],
     tech: ["React", "Three.js", "WebGL", "Tailwind"],
-    // Placeholder video. Replace with your actual project video URL.
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-4933-large.mp4"
+    media: [
+      { type: 'video', url: 'https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-on-a-monitor-close-up-1728-large.mp4' },
+      { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000' }
+    ]
   },
   {
     id: 3,
     title: "SplitLevel",
     category: "Real Estate Platform",
+    link: "https://stage.splitlevel.co/",
     description: [
       "Developed blockchain-based property ownership features with MetaMask integration.",
       "Enabled secure crypto and fiat payments using Stripe.",
       "Handled smart contract interactions for decentralized transactions."
     ],
-    tech: ["Blockchain", "MetaMask", "Stripe", "Smart Contracts"]
+    tech: ["Blockchain", "MetaMask", "Stripe", "Smart Contracts"],
+    media: [
+      { type: 'video', url: 'https://assets.mixkit.co/videos/preview/mixkit-person-working-on-a-laptop-view-from-top-4029-large.mp4' },
+      { type: 'image', url: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1000' }
+    ]
   },
   {
     id: 4,
@@ -84,7 +95,11 @@ export const PROJECTS: ProjectItem[] = [
       "Implemented role-based access control for secure user management.",
       "Added data-driven insights and notifications for efficient tracking."
     ],
-    tech: ["Charts.js", "Socket.io", "Real-time Data", "RBAC"]
+    tech: ["Charts.js", "Socket.io", "Real-time Data", "RBAC"],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000' },
+      { type: 'video', url: 'https://assets.mixkit.co/videos/preview/mixkit-business-people-analyzing-financial-charts-at-the-office-4488-large.mp4' }
+    ]
   }
 ];
 

@@ -7,12 +7,14 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Education from './components/Education';
 import Contact from './components/Contact';
+import BackgroundCanvas from './components/BackgroundCanvas';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-dark min-h-screen text-slate-300 font-sans selection:bg-primary selection:text-white">
+    <div className="bg-black min-h-screen text-slate-300 font-sans selection:bg-red-900 selection:text-white relative overflow-hidden">
+      <BackgroundCanvas />
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <Services />
         <Experience />
@@ -20,7 +22,9 @@ const App: React.FC = () => {
         <Skills />
         <Education />
       </main>
-      <Contact />
+      <div className="relative z-10">
+        <Contact />
+      </div>
     </div>
   );
 };

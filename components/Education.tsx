@@ -3,24 +3,23 @@ import { EDUCATION } from '../constants';
 import { GraduationCap, Award } from 'lucide-react';
 
 const Education: React.FC = () => {
-  // Since we only have one item now, let's make it a centered featured card
   const edu = EDUCATION[0];
 
   return (
-    <section id="education" className="py-24 bg-slate-900/30">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section id="education" className="py-24 relative">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white font-display mb-4">Education</h2>
           <p className="text-slate-400">Academic background and qualifications.</p>
         </div>
 
         <div className="max-w-3xl mx-auto">
-           <div className="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+           <div className="glass-card bg-black/40 rounded-3xl p-8 md:p-12 relative overflow-hidden group border border-white/10">
               {/* Background gradient */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] -mr-16 -mt-16 group-hover:bg-secondary/20 transition-colors"></div>
               
               <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-8 relative z-10">
-                 <div className="w-20 h-20 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center text-secondary shadow-xl shrink-0">
+                 <div className="w-20 h-20 rounded-2xl bg-black border border-white/10 flex items-center justify-center text-secondary shadow-xl shrink-0 group-hover:scale-110 transition-transform">
                     <GraduationCap size={40} />
                  </div>
                  
@@ -34,7 +33,7 @@ const Education: React.FC = () => {
                     </div>
                  </div>
 
-                 <div className="bg-slate-950/50 backdrop-blur px-6 py-3 rounded-xl border border-white/5 text-center shrink-0">
+                 <div className="bg-black/50 backdrop-blur px-6 py-3 rounded-xl border border-white/10 text-center shrink-0">
                     <Award size={24} className="text-yellow-400 mx-auto mb-1" />
                     <p className="text-sm text-slate-400">CGPA</p>
                     <p className="text-lg font-bold text-white">6.8/10</p>

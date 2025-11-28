@@ -4,8 +4,8 @@ import { EXPERIENCE } from '../constants';
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience" className="py-24 bg-slate-900/30 relative">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section id="experience" className="py-24 relative">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white font-display mb-4">
             Where I <span className="text-gradient">Work</span>
@@ -21,11 +21,11 @@ const Experience: React.FC = () => {
             <div key={job.id} className={`relative flex flex-col md:flex-row gap-8 mb-16 last:mb-0 group ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
               
               {/* Timeline Dot */}
-              <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-dark border-2 border-primary shadow-[0_0_15px_rgba(99,102,241,0.5)] md:-translate-x-1/2 mt-1.5 z-10 group-hover:scale-125 transition-transform duration-300"></div>
+              <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-black border-2 border-primary shadow-[0_0_15px_rgba(99,102,241,0.5)] md:-translate-x-1/2 mt-1.5 z-10 group-hover:scale-150 transition-transform duration-300"></div>
 
               {/* Content Card */}
               <div className="flex-1 ml-16 md:ml-0">
-                <div className="glass-card p-8 rounded-3xl hover:border-primary/30 transition-all duration-300 relative group-hover:-translate-y-1">
+                <div className="glass-card p-8 rounded-3xl hover:border-primary/30 transition-all duration-300 relative group-hover:-translate-y-1 bg-black/40">
                   
                   {/* Decorative corner */}
                   <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-100 transition-opacity">
@@ -51,7 +51,7 @@ const Experience: React.FC = () => {
                   <ul className="space-y-4">
                     {job.description.map((desc, i) => (
                       <li key={i} className="flex gap-3 text-slate-300 text-sm leading-relaxed group/item">
-                        <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 group-hover/item:bg-primary transition-colors"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 group-hover/item:bg-primary transition-colors shadow-[0_0_5px_rgba(168,85,247,0.5)]"></span>
                         <span>{desc}</span>
                       </li>
                     ))}

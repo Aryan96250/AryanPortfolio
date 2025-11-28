@@ -13,8 +13,11 @@ export interface ProjectItem {
   category: string;
   description: string[];
   tech: string[];
-  videoUrl?: string; // Optional URL for project video
   link?: string;
+  media: {
+    type: 'image' | 'video';
+    url: string;
+  }[];
 }
 
 export interface SkillCategory {

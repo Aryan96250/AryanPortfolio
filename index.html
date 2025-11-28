@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Creepster&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -15,29 +15,30 @@
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
               display: ['Space Grotesk', 'sans-serif'],
+              horror: ['Creepster', 'cursive'],
             },
             colors: {
-              primary: '#6366f1', // Indigo 500
-              secondary: '#a855f7', // Purple 500
-              accent: '#06b6d4', // Cyan 500
-              dark: '#030712', // Gray 950 (darker)
-              card: '#111827', // Gray 900
+              primary: '#ef4444', // Red 500
+              secondary: '#f97316', // Orange 500
+              accent: '#eab308', // Yellow 500
+              dark: '#000000', // Pitch Black
+              card: '#0a0a0a', // Very dark gray
+              blood: '#880808',
             },
             animation: {
-              'blob': 'blob 7s infinite',
               'float': 'float 6s ease-in-out infinite',
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'flicker': 'flicker 0.15s infinite',
             },
             keyframes: {
-              blob: {
-                '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                '100%': { transform: 'translate(0px, 0px) scale(1)' },
-              },
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-20px)' },
+              },
+              flicker: {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0.7 },
+                '25%, 75%': { opacity: 0.9 },
               }
             }
           }
@@ -45,48 +46,73 @@
       }
     </script>
     <style>
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
+      html {
+        scroll-padding-top: 80px; /* Offset for sticky header */
+        background-color: #000000;
+        cursor: crosshair; /* Horror cursor */
       }
-      ::-webkit-scrollbar-track {
-        background: #030712; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #374151; 
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #4b5563; 
+      
+      body {
+        background-color: #000000;
+        color: #e2e8f0;
+        overflow-x: hidden;
       }
 
-      /* Glassmorphism Utilities */
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000000; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border-radius: 4px;
+        border: 1px solid #555;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ef4444; 
+      }
+
+      /* Enhanced Glassmorphism for Black Background */
       .glass {
-        background: rgba(17, 24, 39, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(5, 5, 5, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
       
       .glass-card {
-        background: rgba(31, 41, 55, 0.4);
+        background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(100, 100, 100, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+      }
+      
+      .glass-card:hover {
+        border-color: rgba(239, 68, 68, 0.6);
+        background: rgba(20, 5, 5, 0.9);
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
       }
 
       /* Text Glow */
       .text-glow {
-        text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
       }
 
       /* Gradient Text */
       .text-gradient {
-        background: linear-gradient(to right, #6366f1, #a855f7, #06b6d4);
+        background: linear-gradient(to right, #ef4444, #f97316, #b91c1c);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        filter: drop-shadow(0 0 5px rgba(239,68,68,0.5));
+      }
+
+      .hover-flicker:hover {
+        animation: flicker 0.2s infinite;
+        text-shadow: 0 0 8px #ef4444;
       }
     </style>
   <script type="importmap">
@@ -100,7 +126,7 @@
 }
 </script>
 </head>
-  <body class="bg-dark text-slate-300 font-sans antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+  <body class="bg-black text-slate-300 font-sans antialiased selection:bg-red-900 selection:text-white overflow-x-hidden">
     <div id="root"></div>
   </body>
 </html>
