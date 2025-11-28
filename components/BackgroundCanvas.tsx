@@ -1,15 +1,38 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
+
+type WeatherType = 'STORM' | 'SNOW' | 'SUNNY';
 
 const BackgroundCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [weather, setWeather] = useState<WeatherType>('STORM');
 
+  // Video Sources mapping
+  const VIDEOS = {
+    STORM: "https://assets.mixkit.co/videos/preview/mixkit-forest-fire-with-smoke-running-up-trees-31294-large.mp4",
+    SNOW: "https://assets.mixkit.co/videos/preview/mixkit-winter-forest-with-snow-falling-25983-large.mp4",
+    SUNNY: "https://assets.mixkit.co/videos/preview/mixkit-sun-rays-through-the-trees-in-a-forest-41386-large.mp4"
+  };
+
+  // Weather Cycle Logic
   useEffect(() => {
-    // --- VIDEO CONFIG ---
-    if (videoRef.current) {
-        videoRef.current.playbackRate = 0.7; // Slow motion for cinematic feel
-    }
+    const cycleWeather = () => {
+      const weathers: WeatherType[] = ['STORM', 'SNOW', 'SUNNY'];
+      const randomWeather = weathers[Math.floor(Math.random() * weathers.length)];
+      setWeather(randomWeather);
+    };
 
+    // Initial Random
+    cycleWeather();
+
+    // Change every 20 seconds
+    const interval = setInterval(cycleWeather, 20000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Effect to handle particle system and video transitions
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { alpha: true });
@@ -18,47 +41,15 @@ const BackgroundCanvas: React.FC = () => {
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
-    // --- RESIZE HANDLER ---
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
     window.addEventListener('resize', handleResize);
 
-    // --- PARTICLE CLASSES ---
+    // --- PARTICLE SYSTEM ---
 
-    class RainDrop {
-      x: number;
-      y: number;
-      speed: number;
-      len: number;
-      
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height - height;
-        this.speed = Math.random() * 15 + 10;
-        this.len = Math.random() * 20 + 10;
-      }
-      
-      update() {
-        this.y += this.speed;
-        if (this.y > height) {
-          this.y = -this.len;
-          this.x = Math.random() * width;
-        }
-      }
-      
-      draw(ctx: CanvasRenderingContext2D) {
-        ctx.beginPath();
-        ctx.strokeStyle = 'rgba(180, 20, 20, 0.4)'; // Blood Red
-        ctx.lineWidth = 1.5;
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x, this.y + this.len);
-        ctx.stroke();
-      }
-    }
-
-    class FireParticle {
+    class Particle {
         x: number;
         y: number;
         vx: number;
@@ -66,207 +57,192 @@ const BackgroundCanvas: React.FC = () => {
         life: number;
         maxLife: number;
         size: number;
-        
-        constructor(x: number, y: number, angle: number) {
-            this.x = x;
-            this.y = y;
-            const speed = Math.random() * 6 + 4;
-            const spread = (Math.random() - 0.5) * 0.5;
-            this.vx = Math.cos(angle + spread) * speed;
-            this.vy = Math.sin(angle + spread) * speed;
-            this.life = Math.random() * 40 + 20;
-            this.maxLife = this.life;
-            this.size = Math.random() * 20 + 10;
-        }
+        color: string;
+        type: 'rain' | 'snow' | 'pollen' | 'ember';
 
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.vy -= 0.1; // Rise up
-            this.life--;
-            this.size *= 0.95;
-        }
-
-        draw(ctx: CanvasRenderingContext2D) {
-            const alpha = this.life / this.maxLife;
-            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-            gradient.addColorStop(0, `rgba(255, 255, 220, ${alpha})`); 
-            gradient.addColorStop(0.3, `rgba(255, 150, 0, ${alpha})`); 
-            gradient.addColorStop(1, `rgba(50, 0, 0, 0)`); 
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    class Wyvern {
-        x: number;
-        y: number;
-        size: number;
-        t: number;
-        fireCooldown: number;
-        direction: number; // 1 or -1
-
-        constructor() {
-            this.x = width * 0.8;
-            this.y = height * 0.3;
-            this.size = 1;
-            this.t = 0;
-            this.fireCooldown = 200;
-            this.direction = -1;
-        }
-
-        update() {
-            this.t += 0.02;
+        constructor(w: number, h: number, currentWeather: WeatherType) {
+            this.x = Math.random() * w;
+            this.y = Math.random() * h;
             
-            // Hover motion
-            this.y += Math.sin(this.t) * 0.5;
-            
-            // Slow Drift
-            this.x += Math.sin(this.t * 0.5) * 1; 
-
-            // Fire Logic
-            if (Math.random() < 0.005) {
-                this.fireCooldown = 60; // Breath fire duration
-            }
-            
-            if (this.fireCooldown > 0) {
-                this.fireCooldown--;
-                // Spawn fire particles from "mouth"
-                const mouthX = this.x - 40;
-                const mouthY = this.y + 10;
-                for(let i=0; i<4; i++) {
-                    fireParticles.push(new FireParticle(mouthX, mouthY, Math.PI + 0.2));
+            // Set type based on weather
+            if (currentWeather === 'SNOW') {
+                this.type = 'snow';
+                this.vx = (Math.random() - 0.5) * 2; // Drift
+                this.vy = Math.random() * 2 + 1; // Slow fall
+                this.size = Math.random() * 3 + 1;
+                this.color = `rgba(255, 255, 255, ${Math.random() * 0.8})`;
+                this.life = 300;
+            } else if (currentWeather === 'SUNNY') {
+                this.type = 'pollen';
+                this.vx = (Math.random() - 0.5) * 0.5; // Float
+                this.vy = (Math.random() - 0.5) * 0.5; // Float
+                this.size = Math.random() * 2;
+                this.color = `rgba(255, 220, 150, ${Math.random() * 0.6})`; // Gold dust
+                this.life = 200;
+            } else {
+                // STORM / DEFAULT
+                const isEmber = Math.random() > 0.8;
+                if (isEmber) {
+                    this.type = 'ember';
+                    this.y = h + 10;
+                    this.vx = (Math.random() - 0.5) * 4;
+                    this.vy = -(Math.random() * 4 + 2); // Rise fast
+                    this.size = Math.random() * 2 + 0.5;
+                    this.color = `rgba(255, ${Math.floor(Math.random() * 100)}, 0, ${Math.random()})`;
+                    this.life = Math.random() * 50 + 20;
+                } else {
+                    this.type = 'rain';
+                    this.vx = (Math.random() - 0.5) * 2;
+                    this.vy = Math.random() * 20 + 15; // Fast rain
+                    this.size = Math.random() * 2 + 1;
+                    this.color = 'rgba(150, 170, 190, 0.5)';
+                    this.life = 100;
                 }
             }
+            this.maxLife = this.life;
+        }
+
+        update(w: number, h: number) {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life--;
+
+            // Wrap around logic
+            if (this.type === 'rain' || this.type === 'snow') {
+                if (this.y > h) {
+                    this.y = -10;
+                    this.x = Math.random() * w;
+                }
+            } else if (this.type === 'ember') {
+               // Embers die
+            } else if (this.type === 'pollen') {
+                if (this.x > w) this.x = 0;
+                if (this.x < 0) this.x = w;
+                if (this.y > h) this.y = 0;
+                if (this.y < 0) this.y = h;
+            }
         }
 
         draw(ctx: CanvasRenderingContext2D) {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            // Flip if needed (currently facing left)
-            const scale = 1.2;
-            ctx.scale(scale, scale);
-
-            // --- DRAW WYVERN (Silhouette + Lighting) ---
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
             
-            // Wings
-            const wingFlap = Math.sin(this.t * 2) * 20;
-            ctx.fillStyle = '#050a05'; // Dark body
-            ctx.beginPath();
-            // Left Wing
-            ctx.moveTo(10, -10);
-            ctx.quadraticCurveTo(50, -60 + wingFlap, 120, -40 + wingFlap); 
-            ctx.quadraticCurveTo(80, 0 + wingFlap, 20, 10);
-            ctx.fill();
-            
-            // Body
-            const grad = ctx.createLinearGradient(-50, -20, 50, 20);
-            grad.addColorStop(0, '#000');
-            grad.addColorStop(0.5, '#1a1a1a');
-            grad.addColorStop(1, '#000');
-            ctx.fillStyle = grad;
-            
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 50, 25, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Head
-            ctx.beginPath();
-            ctx.moveTo(-50, -10);
-            ctx.lineTo(-80, 5); // Snout
-            ctx.lineTo(-50, 15); // Jaw
-            ctx.fill();
-
-            // Horns
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(-60, -8);
-            ctx.lineTo(-70, -25);
-            ctx.stroke();
-
-            // Glowing Eye
-            ctx.fillStyle = this.fireCooldown > 0 ? '#ffaa00' : '#ff0000';
-            ctx.shadowColor = '#ff0000';
-            ctx.shadowBlur = 10;
-            ctx.beginPath();
-            ctx.arc(-65, -2, 2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.shadowBlur = 0;
-
-            // Fire Light Reflection on Body
-            if (this.fireCooldown > 0) {
-                ctx.fillStyle = 'rgba(255, 100, 0, 0.2)';
-                ctx.beginPath();
-                ctx.ellipse(-40, 5, 20, 15, 0, 0, Math.PI * 2);
+            if (this.type === 'rain') {
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 1;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + this.vx, this.y + this.vy * 1.5);
+                ctx.stroke();
+            } else if (this.type === 'snow') {
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = 'white';
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.shadowBlur = 0;
+            } else {
+                ctx.globalAlpha = this.life / this.maxLife;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
             }
-
-            ctx.restore();
         }
     }
 
-    // --- INSTANTIATION ---
-    const rain = Array.from({length: 100}, () => new RainDrop());
-    const fireParticles: FireParticle[] = [];
-    const wyvern = new Wyvern();
+    let particles: Particle[] = [];
+    
+    // Initialize particles based on current weather
+    const initParticles = () => {
+        particles = [];
+        const count = weather === 'STORM' ? 150 : weather === 'SNOW' ? 200 : 80;
+        for (let i = 0; i < count; i++) {
+            particles.push(new Particle(width, height, weather));
+        }
+    };
+    initParticles();
 
-    // --- ANIMATION LOOP ---
+    let lightningTimer = 0;
+    let flashOpacity = 0;
+    let animationFrameId: number;
+
     const animate = () => {
         ctx.clearRect(0, 0, width, height);
 
-        // 1. Draw Rain
-        rain.forEach(drop => {
-            drop.update();
-            drop.draw(ctx);
-        });
+        // --- WEATHER SPECIFIC OVERLAYS ---
+        
+        // 1. Lightning (Only in Storm)
+        if (weather === 'STORM') {
+            if (Math.random() < 0.005) { 
+                lightningTimer = Math.floor(Math.random() * 10) + 5; 
+            }
+            if (lightningTimer > 0) {
+                lightningTimer--;
+                flashOpacity = Math.random() * 0.3;
+                ctx.fillStyle = `rgba(255, 255, 255, ${flashOpacity})`;
+                ctx.fillRect(0, 0, width, height);
+            }
+        }
 
-        // 2. Draw Wyvern
-        wyvern.update();
-        wyvern.draw(ctx);
+        // 2. Sun Rays (Only in Sunny)
+        if (weather === 'SUNNY') {
+             const gradient = ctx.createLinearGradient(0, 0, width, height);
+             gradient.addColorStop(0, 'rgba(255, 200, 100, 0.1)');
+             gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+             ctx.fillStyle = gradient;
+             ctx.fillRect(0,0, width, height);
+        }
 
-        // 3. Draw Fire
-        ctx.globalCompositeOperation = 'lighter';
-        for (let i = fireParticles.length - 1; i >= 0; i--) {
-            fireParticles[i].update();
-            fireParticles[i].draw(ctx);
-            if (fireParticles[i].life <= 0) fireParticles.splice(i, 1);
+        // 3. Cold Overlay (Only in Snow)
+        if (weather === 'SNOW') {
+             ctx.fillStyle = 'rgba(0, 20, 50, 0.1)'; // Blue tint
+             ctx.fillRect(0, 0, width, height);
+        }
+
+        // Update & Draw Particles
+        ctx.globalCompositeOperation = 'screen';
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update(width, height);
+            particles[i].draw(ctx);
+            
+            // Respawn dead particles
+            if (particles[i].life <= 0) {
+                particles[i] = new Particle(width, height, weather);
+            }
         }
         ctx.globalCompositeOperation = 'source-over';
 
-        // 4. Fog/Vignette Overlay
-        const grad = ctx.createLinearGradient(0, height, 0, 0);
-        grad.addColorStop(0, 'rgba(0, 5, 0, 0.9)'); // Ground fog
-        grad.addColorStop(0.3, 'rgba(0, 0, 0, 0)');
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0.6)'); // Sky dark
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
-
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        cancelAnimationFrame(animationFrameId);
+    };
+  }, [weather]); // Re-run when weather changes
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Background Video */}
+    <div className="fixed inset-0 z-0 pointer-events-none bg-black transition-all duration-1000">
         <video 
             ref={videoRef}
+            key={weather} // Force reload on weather change
             autoPlay 
             muted 
             loop 
             playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-50 grayscale-[30%] contrast-125"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ 
+                filter: weather === 'STORM' ? 'brightness(0.7) contrast(1.2)' : 
+                        weather === 'SNOW' ? 'brightness(0.9) hue-rotate(180deg) saturate(0.5)' : 
+                        'brightness(1.1) saturate(1.2)' 
+            }}
         >
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-foggy-forest-with-trees-overhead-view-30472-large.mp4" type="video/mp4" />
+            <source src={VIDEOS[weather]} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80 mix-blend-multiply"></div>
+        
+        {/* Vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_40%,_#000000_100%)] opacity-50"></div>
+        
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );

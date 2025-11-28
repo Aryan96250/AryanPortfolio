@@ -19,20 +19,21 @@
               dripping: ['Nosifer', 'cursive'],
             },
             colors: {
-              blood: '#8a0303',
-              swamp: '#0d1f12', 
+              blood: '#ff0000',
+              swamp: '#1a2e05', 
               rot: '#4a5d23',
-              dark: '#010502',
+              dark: '#050a05',
             },
             animation: {
               'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'flicker': 'flicker 0.3s infinite alternate',
               'glitch': 'glitch 1s linear infinite',
               'float-slow': 'float 8s ease-in-out infinite',
+              'flash': 'flash 5s infinite random',
             },
             keyframes: {
               flicker: {
-                '0%': { opacity: 1, textShadow: '0 0 10px #8a0303' },
+                '0%': { opacity: 1, textShadow: '0 0 10px #ff0000' },
                 '100%': { opacity: 0.6, textShadow: '0 0 2px #8a0303' },
               },
               glitch: {
@@ -52,13 +53,13 @@
     <style>
       html {
         scroll-padding-top: 100px; /* Offset for fixed navbar */
-        background-color: #000000;
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%238a0303" stroke="%23ffffff" stroke-width="1"><path d="M12 2L2 22h20L12 2z"/></svg>') 16 16, auto;
+        background-color: #020202;
+        cursor: crosshair;
       }
       
       body {
-        background-color: #000000;
-        color: #d4d4d4;
+        background-color: #020202;
+        color: #e5e5e5;
         overflow-x: hidden;
       }
 
@@ -67,36 +68,46 @@
         width: 10px;
       }
       ::-webkit-scrollbar-track {
-        background: #0a0a0a; 
+        background: #000; 
       }
       ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #1a2e05, #8a0303); 
+        background: linear-gradient(180deg, #333, #8a0303); 
         border-radius: 5px;
         border: 1px solid #000;
       }
 
-      /* Jungle Horror Glass */
+      /* Jungle Horror Glass - Lightened for visibility */
       .glass-jungle {
-        background: rgba(5, 20, 10, 0.7);
+        background: rgba(0, 0, 0, 0.25); /* Much more transparent */
         backdrop-filter: blur(8px);
-        border: 1px solid rgba(74, 93, 35, 0.3);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
       }
       
       .glass-jungle:hover {
-        background: rgba(10, 25, 10, 0.85);
-        border-color: rgba(138, 3, 3, 0.6);
-        box-shadow: 0 0 20px rgba(138, 3, 3, 0.3);
+        background: rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 50, 50, 0.4);
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
+      }
+      
+      .glass-card {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
       }
 
       /* Text Effects */
       .text-blood-glow {
-        text-shadow: 0 0 15px rgba(138, 3, 3, 0.8), 2px 2px 0px rgba(0,0,0,1);
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 2px 2px 0px rgba(0,0,0,1);
+      }
+      
+      .text-shadow-md {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
       }
 
       .hover-horror:hover {
         color: #ef4444;
-        text-shadow: 2px 2px 0px #000, -1px -1px 0 #8a0303;
+        text-shadow: 0 0 8px #ff0000;
         transform: scale(1.05);
       }
     </style>
@@ -111,7 +122,7 @@
 }
 </script>
 </head>
-  <body class="bg-black text-slate-300 font-sans antialiased selection:bg-blood selection:text-white">
+  <body class="bg-black text-slate-200 font-sans antialiased selection:bg-blood selection:text-white">
     <div id="root"></div>
   </body>
 </html>
