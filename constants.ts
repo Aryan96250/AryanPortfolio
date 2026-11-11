@@ -12,7 +12,7 @@ export const PERSONAL_INFO = {
 
 export const SOCIAL_LINKS: SocialLink[] = [
   { platform: "LinkedIn", url: "https://www.linkedin.com/in/chauhan-3a11b6286", icon: "Linkedin" },
-  { platform: "GitHub", url: "https://github.com", icon: "Github" }, 
+  { platform: "GitHub", url: "https://github.com/Aryan96250", icon: "Github" }, 
   { platform: "Email", url: `mailto:${PERSONAL_INFO.email}`, icon: "Mail" }
 ];
 
@@ -30,7 +30,7 @@ export const DRAGON_LORE = {
 export const EXPERIENCE: ExperienceItem[] = [
   {
     id: 1,
-    company: "Tricky Web Solution Pvt Lmt",
+    company: "Elyria Soft Pvt Ltd",
     role: "Software Developer - Angular",
     period: "November 2023 – Present",
     location: "Mohali, India",
@@ -132,11 +132,11 @@ export const SKILLS: SkillCategory[] = [
 export const EDUCATION: EducationItem[] = [
   {
     id: 1,
-    institution: "Carrier Point University",
-    degree: "Bachelor's in Computer Application (CSE)",
+    institution: "Career Point University",
+    degree: "Bachelor of Computer Applications (BCA)",
     period: "2020 – 2023",
     location: "Hamirpur, India",
-    score: "Cum. GPA: 6.8/10.0"
+    score: "CGPA: 6.84/10.0"
   }
 ];
 
