@@ -1,20 +1,68 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Aryan Chauhan — Developer Portfolio
 
-# Run and deploy your AI Studio app
+A personal portfolio built with **React 19, TypeScript and Vite**. The site presents selected work, technical skills, professional experience, education and contact information in a responsive single-page experience.
 
-This contains everything you need to run your app locally.
+## Highlights
 
-View your app in AI Studio: https://ai.studio/apps/drive/1CPkB6sEH8FOLWtGqzPyoaNB7DLjqC6iA
+- Hero section and personal introduction
+- Selected project cards with media previews
+- Technical skills grouped by category
+- Professional experience and education sections
+- Services and contact sections
+- Responsive UI with reusable React components
 
-## Run Locally
+## Tech stack
 
-**Prerequisites:**  Node.js
+- React 19
+- TypeScript
+- Vite 6
+- Tailwind CSS (utility classes)
+- Lucide React icons
 
+## Run locally
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**Requirements:** Node.js (LTS recommended) and npm.
+
+```bash
+git clone https://github.com/Aryan96250/AryanPortfolio.git
+cd AryanPortfolio
+npm install
+npm run dev
+```
+
+Vite prints the local development URL in the terminal.
+
+## Available scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the local development server |
+| `npm run build` | Create a production build |
+| `npm run preview` | Preview the production build locally |
+
+## Project structure
+
+```text
+.
+├── components/       # Portfolio sections and UI components
+├── App.tsx           # Main application composition
+├── constants.ts      # Portfolio content and project data
+├── index.html        # HTML entry point
+├── index.tsx         # React entry point
+├── package.json
+└── vite.config.ts
+```
+
+## Customize the portfolio
+
+Update the content in `constants.ts` (personal information, experience, projects, skills and education). Reusable page sections live in `components/`.
+
+## Notes
+
+- Project links and descriptions are maintained in `constants.ts`; verify external links before presenting the portfolio publicly.
+- Do not commit API keys, tokens, private credentials or local environment files.
+
+## Author
+
+**Aryan Chauhan**  
+[GitHub](https://github.com/Aryan96250) · [LinkedIn](https://www.linkedin.com/in/chauhan-3a11b6286) · [Email](mailto:aryan96250@gmail.com)
